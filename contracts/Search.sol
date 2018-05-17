@@ -1,15 +1,24 @@
-pragma solidity 0.4.24;
+pragma solidity 0.4.21;
 
 contract Search {
-	mapping(uint256 => bytes32[]) keywordsToResources;
-	
-	mapping(uint256 => address) public resourceToOwner;
-	mapping(uint256 => uint256) public resourceToId;
+	mapping(uint => bytes32[]) keywordsToResources;
+
+	mapping(uint => address) public idToOwner;
+	mapping(uint => uint) resourceToId;
 	bytes[] public resources;
-	
+
+	event LogResourceRegistered(uint _id, string _address);
+
 	function register(string _ipfsAddress) external {
-	   // uint256 id = resurces.length;
-	   
+	  uint id = resources.length;
+	  resources.push(bytes(_ipfsAddress));
+	  idToOwner[id] = msg.sender;
+	  resourceToId[id];
+		emit LogResourceRegistered(id, _ipfsAddress);
+	}
+
+	function getId(string _ipfsAddress) external view returns (uint) {
+
 	}
 
 	function add(bytes32 _ipfsAddress, string _keyword) external {

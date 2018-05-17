@@ -12,7 +12,10 @@ contract('Search', async (accounts) => {
       assert.equal(_id, 0)
       assert.equal(_address, address)
 
-      let owner = await contract.resourceToOwner.call(_id)
+      let savedId = await contract.getId.call(address)
+      assert.equal(savedId.toNumber(), _id.toNumber())
+
+      let owner = await contract.idToOwner.call(_id)
       assert.equal(owner, accounts[0])
     })
   })
