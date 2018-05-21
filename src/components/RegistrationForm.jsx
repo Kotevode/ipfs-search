@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-let RegistrationForm = ({ handleSubmit }) => (
+let RegistrationForm = ({ handleSubmit, pristine, submitting }) => (
   <form onSubmit={handleSubmit}>
     <div className="form-group">
       <label htmlFor="ipfsAddress">IPFS address</label>
@@ -10,7 +10,7 @@ let RegistrationForm = ({ handleSubmit }) => (
              component="input"
              type="text"/>
     </div>
-    <button type="submit" className="btn btn-primary">Add</button>
+    <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Add</button>
   </form>
 )
 

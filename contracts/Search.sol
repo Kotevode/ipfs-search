@@ -1,12 +1,12 @@
 pragma solidity 0.4.21;
 
 contract Search {
-	mapping(uint => uint[]) keywordsToResources;
-	mapping(uint => bool) keywordToResourceExists;
+	mapping(uint => uint[]) private keywordsToResources;
+	mapping(uint => bool) private keywordToResourceExists;
 
 	mapping(uint => address) public idToOwner;
-	mapping(uint => uint) resourceToId;
-	bytes[] public resources;
+	mapping(uint => uint) private resourceToId;
+	bytes[] private resources;
 
 	event LogResourceRegistered(uint _id, string _address);
 	event LogResourceBinded(string _keyword, string _address);
@@ -25,8 +25,12 @@ contract Search {
 	  uint id = resources.length;
 	  resources.push(bytes(_ipfsAddress));
 	  idToOwner[id] = msg.sender;
-	  resourceToId[id];
+	  resourceToId[uint(keccak256(_ipfsAddress))] = id;
 		emit LogResourceRegistered(id, _ipfsAddress);
+	}
+
+	function getResource(uint id) external view returns (string) {
+		return string(resources[id]);
 	}
 
 	function add(uint _resourceId, string _keyword) external
