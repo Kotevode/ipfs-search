@@ -1,4 +1,5 @@
-import { takeLatest, select, call, apply, put } from 'redux-saga/effects'
+import { takeLatest, select, call, apply, all, put } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
 import { types, actions } from '../actions'
 // import { web3 as Web3, account } from '../selectors'
 import getWeb3 from '../utils/getWeb3'
@@ -15,8 +16,32 @@ export function* addResource(action) {
   )
   let { _id: id } = result.logs[0].args
   yield put(actions.resourceAdded(id.toNumber(), ipfsAddress))
+  yield put(push(`/resources/${id.toNumber()}`))
+}
+
+export function* loadResource(action) {
+  let { id } = action.payload
+  let web3 = getWeb3()
+  let search = yield call(Search, web3)
+  debugger
+  let result = yield all({
+    ipfsAddress: yield apply(
+      search.resources, search.resources.call, [id]
+    ),
+    owner: yield apply(
+      search.idToOwner, search.idToOwner.call, [id]
+    )
+  })
+  yield put( {
+    type: types.LOAD_RESOURCE_SUCCESS,
+    payload: result
+  })
 }
 
 export function* watchAddResource() {
   yield takeLatest(types.ADD_RESOURCE, addResource)
+}
+
+export function* watchLoadResource() {
+  yield takeLatest(types.LOAD_RESOURCE, loadResource)
 }
