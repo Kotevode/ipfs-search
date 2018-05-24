@@ -12,10 +12,8 @@ contract('Search', async (accounts) => {
       assert.equal(_id, 0)
       assert.equal(_address, address)
 
-      let resource = await contract.getResource.call(_id)
-      assert.equal(address, resource)
-
-      let owner = await contract.idToOwner.call(_id)
+      let [ ipfsAddress, owner ] = await contract.resources.call(_id)
+      assert.equal(ipfsAddress, address)
       assert.equal(owner, accounts[0])
     })
   })

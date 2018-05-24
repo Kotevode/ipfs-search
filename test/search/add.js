@@ -18,6 +18,12 @@ contract('Search', async (accounts) => {
     it('allows to bind a ipfs resource to a keyword', async () => {
       await search.add(resourceId, "test")
 
+      let keywords = await search.keywordsForResource.call(resourceId)
+        .then(hashes => Promise.all(
+          hashes.map(hash => search.keywords.call(hash))
+        ))
+      assert.deepEqual(keywords, ["test"])
+
       let result = await search.find.call("test")
       let resources = result.map(r => r.toNumber())
       assert.deepEqual(resources, [ resourceId ])

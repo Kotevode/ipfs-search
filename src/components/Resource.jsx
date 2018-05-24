@@ -19,7 +19,7 @@ export default class Resource extends Component {
           <Row>
             <Col>
               <h1>{ this.props.resource.ipfsAddress }</h1>
-              <h2 className="text-muted">Owned by { this.resource.owner }</h2>
+              <h2 className="text-muted">Owned by { this.props.resource.owner }</h2>
             </Col>
           </Row>
           // { resource.isOwnedByUser && (

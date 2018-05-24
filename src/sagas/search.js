@@ -23,18 +23,18 @@ export function* loadResource(action) {
   let { id } = action.payload
   let web3 = getWeb3()
   let search = yield call(Search, web3)
-  debugger
-  let result = yield all({
-    ipfsAddress: yield apply(
-      search.resources, search.resources.call, [id]
-    ),
-    owner: yield apply(
-      search.idToOwner, search.idToOwner.call, [id]
-    )
-  })
+  let [ ipfsAddress, owner ] = yield apply(
+    search.resources,
+    search.resources.call,
+    [ id ]
+  );
   yield put( {
     type: types.LOAD_RESOURCE_SUCCESS,
-    payload: result
+    payload: {
+      id,
+      ipfsAddress,
+      owner
+    }
   })
 }
 

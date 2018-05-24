@@ -5,8 +5,8 @@ import Register from '../components/Register'
 const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSubmit: (values) => {
-    dispatch(actions.addResource(values))
+  handleSubmit: ({ ipfsAddress }) => {
+    dispatch(actions.addResource(ipfsAddress))
   }
 })
 
