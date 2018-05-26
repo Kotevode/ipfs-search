@@ -5,6 +5,7 @@ export const types = createTypes([
   ...async('INITIALIZE_WEB3'),
   ...async('LOAD_ACCOUNTS'),
   ...async('LOAD_RESOURCE'),
+  ...async('BIND_RESOURCE'),
 ])
 
 export const actions = {
@@ -12,5 +13,7 @@ export const actions = {
   resourceAdded: actionCreator(types.ADD_RESOURCE_SUCCESS, 'id', 'ipfsAddress'),
   web3Initialized: actionCreator(types.INITIALIZE_WEB3_SUCCESS, 'web3'),
   accountsLoaded: actionCreator(types.LOAD_ACCOUNTS_SUCCESS, 'accounts'),
-  loadResource: actionCreator(types.LOAD_RESOURCE, 'id')
+  loadResource: actionCreator(types.LOAD_RESOURCE, 'id'),
+  bind: actionCreator(types.BIND_RESOURCE, 'id', 'keyword'),
+  resourceBinded: actionCreator(types.BIND_RESOURCE_SUCCESS, 'id', 'keyword')
 }

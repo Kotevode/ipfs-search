@@ -1,23 +1,44 @@
 import { combineReducers } from 'redux'
 import { types } from '../actions'
 
-const resource = (state = { isLoading: false }, action) => {
+const initialState = {
+  isLoading: false,
+  keywords: {
+    binded: [],
+    suggested: [],
+  }
+}
+
+const resource = (state = initialState, action) => {
   switch (action.type) {
+    case types.ADD_RESOURCE_SUCCESS:
     case types.LOAD_RESOURCE_SUCCESS:
       return {
         ...state,
         ...action.payload,
         isLoading: false,
       }
-    case types.ADD_RESOURCE_SUCCESS:
+    case types.LOAD_RESOURCE_FAIL:
       return {
         ...state,
-        ...action.payload
+        isLoading: false,
       }
     case types.LOAD_RESOURCE:
       return {
         ...state,
         isLoading: true
+      }
+    case types.BIND_RESOURCE_SUCCESS:
+      let { keyword } = action.payload
+      return {
+        ...state,
+        keywords: {
+          ...state.keywords,
+          binded: [
+            ...state.keywords.binded,
+            keyword
+          ]
+        }
       }
     default:
       return state

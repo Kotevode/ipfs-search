@@ -19,17 +19,23 @@ contract Search {
 	event LogResourceBinded(string _keyword, string _address);
 
 	modifier onlyOwner(uint _resourceId) {
-		require(resources[_resourceId].owner == msg.sender);
+		require(resources[_resourceId].owner == msg.sender,
+				"Permission denied"
+			);
 		_;
 	}
 
 	modifier onlyNewBinding(uint _resourceId, string _keyword) {
-		require(!keywordToResourceExists[uint(keccak256(_resourceId, _keyword))]);
+		require(!keywordToResourceExists[uint(keccak256(_resourceId, _keyword))],
+			"Binding exists"
+		);
 		_;
 	}
 
 	modifier onlyExistingResource(uint _resourceId) {
-		require(resources.length > _resourceId);
+		require(resources.length > _resourceId,
+				"Resource doesnt exists"
+			);
 		_;
 	}
 
