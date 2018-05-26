@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { types } from '../actions'
+import query from './query'
 
 const initialState = {
   isLoading: false,
@@ -66,11 +67,7 @@ const resources = (state = {}, action) => {
   }
 }
 
-const results = (state = [], action) => {
-  return state
-}
-
 export default combineReducers({
   resources,
-  results
+  query,
 })

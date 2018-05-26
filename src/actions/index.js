@@ -6,6 +6,7 @@ export const types = createTypes([
   ...async('LOAD_ACCOUNTS'),
   ...async('LOAD_RESOURCE'),
   ...async('BIND_RESOURCE'),
+  ...async('SEARCH_QUERY')
 ])
 
 export const actions = {
