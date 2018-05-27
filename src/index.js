@@ -21,8 +21,8 @@ const router = (
     <Switch>
       <Route exact path="/" component={Search} />
       <Route path="/register" component={Register} />
-      <Route path="/:id" component={Resource} />
-      <Route component={NotFound} />
+      <Route path="/resources/:id" component={Resource} />
+      <Route path="*" component={NotFound} />
     </Switch>
   </Router>
 )

@@ -12,7 +12,7 @@ const text = (state = "", action) => {
 }
 
 const isLoading = (state = false, action) => {
-  switch (action.types) {
+  switch (action.type) {
     case types.SEARCH_QUERY:
       return true
     case types.SEARCH_QUERY_FAIL:
@@ -24,7 +24,7 @@ const isLoading = (state = false, action) => {
 }
 
 const results = (state = [], action) => {
-  switch (action.types) {
+  switch (action.type) {
     case types.SEARCH_QUERY:
       return []
     case types.SEARCH_QUERY_SUCCESS:

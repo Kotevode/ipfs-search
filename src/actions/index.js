@@ -16,5 +16,6 @@ export const actions = {
   accountsLoaded: actionCreator(types.LOAD_ACCOUNTS_SUCCESS, 'accounts'),
   loadResource: actionCreator(types.LOAD_RESOURCE, 'id'),
   bind: actionCreator(types.BIND_RESOURCE, 'id', 'keyword'),
-  resourceBinded: actionCreator(types.BIND_RESOURCE_SUCCESS, 'id', 'keyword')
+  resourceBinded: actionCreator(types.BIND_RESOURCE_SUCCESS, 'id', 'keyword'),
+  queryFetched: actionCreator(types.SEARCH_QUERY_SUCCESS, 'results')
 }

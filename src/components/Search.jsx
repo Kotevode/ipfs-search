@@ -7,7 +7,7 @@ export default ({ handleSubmit, results, isLoading }) => (
   <Container>
     <Row>
       <Col>
-        <SearchForm handleSubmit={handleSubmit}/>
+        <SearchForm onSubmit={handleSubmit}/>
       </Col>
     </Row>
   </Container>

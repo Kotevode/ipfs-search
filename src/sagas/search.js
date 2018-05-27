@@ -1,5 +1,7 @@
 import { takeLatest, select, call, apply, all, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
+import nlp from 'compromise'
+
 import { types, actions } from '../actions'
 // import { web3 as Web3, account } from '../selectors'
 import getWeb3 from '../utils/getWeb3'
@@ -85,6 +87,56 @@ export function* bindResource({ payload: { id, keyword } }) {
   }
 }
 
+const extractKeywords = (query) => {
+  return nlp(query).out('tags')
+    .map(tag => tag.normal)
+}
+
+export function *resourcesForKeywords(keywords, search) {
+  let keywordsToResources = yield all(
+    keywords.reduce((result, keyword) => ({
+      ...result,
+      [keyword]: apply(
+        search.find,
+        search.find.call,
+        [ keyword ]
+      )
+    }), {})
+  )
+  let resources = Object.keys(keywordsToResources)
+  .reduce((result, keyword) => {
+    for (let resource in keywordsToResources[keyword]) {
+      if (!result[resource]) {
+        result[resource] = 1
+      } else {
+        result[resource] += 1
+      }
+    }
+    return result
+  }, {})
+  return Object.entries(resources)
+    .sort((a, b) => a[1] < b[1])
+    .reverse()
+    .map(a => a[0])
+}
+
+export function *find({ payload: { query }}) {
+  try {
+    let web3 = getWeb3()
+    let search = yield call(Search, web3)
+    let keywords = extractKeywords(query)
+    let results = yield* resourcesForKeywords(keywords, search)
+    debugger
+    yield put(actions.queryFetched(results))
+  } catch (error) {
+    yield put({
+      type: types.SEARCH_QUERY_FAIL,
+      error
+    })
+    console.log(error)
+  }
+}
+
 export function* watchAddResource() {
   yield takeLatest(types.ADD_RESOURCE, addResource)
 }
@@ -97,10 +149,15 @@ export function *watchBindResource() {
   yield takeLatest(types.BIND_RESOURCE, bindResource)
 }
 
+export function *watchSearchQuery() {
+  yield takeLatest(types.SEARCH_QUERY, find)
+}
+
 export function *watchAll() {
   yield all([
     watchAddResource(),
     watchLoadResource(),
     watchBindResource(),
+    watchSearchQuery()
   ])
 }

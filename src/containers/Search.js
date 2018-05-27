@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleSubmit: (values) => {
     dispatch({
-      type: types.SEACH_QUERY,
+      type: types.SEARCH_QUERY,
       payload: values
     })
   }
