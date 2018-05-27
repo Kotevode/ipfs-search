@@ -4,6 +4,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { Router, Route, browserHistory } from 'react-router'
 import { Switch } from 'react-router-dom'
 import ReactDOM from 'react-dom'
+import { Web3Provider } from 'react-web3'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Register from './containers/Register'
@@ -28,10 +29,12 @@ const router = (
 )
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App>
-      { router }
-    </App>
-  </Provider>,
+  <Web3Provider>
+    <Provider store={store}>
+      <App>
+        { router }
+      </App>
+    </Provider>
+  </Web3Provider>,
   document.getElementById('root')
 );
