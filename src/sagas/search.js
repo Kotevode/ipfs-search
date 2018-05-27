@@ -1,4 +1,4 @@
-import { takeLatest, select, call, apply, all, put } from 'redux-saga/effects'
+import { takeLatest, takeEvery, select, call, apply, all, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import nlp from 'compromise'
 
@@ -126,7 +126,6 @@ export function *find({ payload: { query }}) {
     let search = yield call(Search, web3)
     let keywords = extractKeywords(query)
     let results = yield* resourcesForKeywords(keywords, search)
-    debugger
     yield put(actions.queryFetched(results))
   } catch (error) {
     yield put({
@@ -142,7 +141,7 @@ export function* watchAddResource() {
 }
 
 export function* watchLoadResource() {
-  yield takeLatest(types.LOAD_RESOURCE, loadResource)
+  yield takeEvery(types.LOAD_RESOURCE, loadResource)
 }
 
 export function *watchBindResource() {
