@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {
   Container,
+  Row,
+  Col,
   Navbar,
   NavbarBrand,
   NavbarToggler,
@@ -27,20 +29,24 @@ export default class Navigation extends Component {
   render() {
     return (
       <Container>
-        <Navbar color="clear" light expand="md">
-          <NavbarBrand href="/">IPFS Search</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/">Find</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/register">Add Resource</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
+        <Row>
+          <Col>
+            <Navbar color="clear" light expand="md" className="px-0">
+              <NavbarBrand href="/">IPFS Search</NavbarBrand>
+              <NavbarToggler onClick={this.toggle} />
+              <Collapse isOpen={this.state.isOpen} navbar>
+                <Nav className="ml-auto" navbar>
+                  <NavItem>
+                    <NavLink href="/">Find</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="/register">Add Resource</NavLink>
+                  </NavItem>
+                </Nav>
+              </Collapse>
+            </Navbar>
+          </Col>
+        </Row>
       </Container>
     );
   }

@@ -13,7 +13,9 @@ export default ({ handleSubmit, results, isLoading }) => (
     </Row>
     <Row>
       <Col>
-        { !isLoading && results.map(result => (
+        { isLoading ? (
+          "Loading"
+        ) : results.map(result => (
           <SearchResult id={result}
                         key={result} />
         ))}
